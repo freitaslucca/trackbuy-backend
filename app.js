@@ -5,6 +5,9 @@ const dbPlugin = require('./plugins/db');
 fastify.register(require('@fastify/cors'));
 fastify.register(dbPlugin);
 fastify.register(require('./routes/auth.routes'));
+fastify.register(require('./routes/test.routes'));
+fastify.register(require('./routes/solicitacoes.routes'));
+fastify.register(require('./routes/dashboard.routes'));
 
 const start = async () => {
   try {
