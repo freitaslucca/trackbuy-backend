@@ -12,9 +12,12 @@
   "dependencies": {
     "@fastify/cors": "^11.0.1",
     "bcryptjs": "^3.0.2",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
     "dotenv": "^16.4.7",
     "fastify": "^5.2.2",
     "fastify-plugin": "^5.0.1",
+    "json2csv": "^6.0.0-alpha.2",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.15.0"
   }
