@@ -14,10 +14,10 @@ async function loginHandler(request, reply) {
 }
 
 async function registerHandler(request, reply) {
-  const { email, senha, tipoUsuario } = request.body;
+  const { email, senha, tipoUsuario, nome, setor } = request.body;
   const db = request.server.mongo;
 
-  const result = await register(email, senha, tipoUsuario, db);
+  const result = await register(email, senha, tipoUsuario, nome, setor, db);
 
   if (!result.success) {
     return reply.code(400).send({ success: false, message: result.message });
