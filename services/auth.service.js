@@ -9,7 +9,13 @@ async function login(email, senha, db) {
   const match = await bcrypt.compare(senha, user.senha);
   if (!match) return { success: false };
 
-  const token = jwt.generateToken({ id: user._id, tipoUsuario: user.tipoUsuario });
+  // Agora, o token incluirá o campo 'nome'
+  const token = jwt.generateToken({
+    id: user._id,
+    tipoUsuario: user.tipoUsuario,
+    nome: user.nome  // Incluindo o nome do usuário no token
+  });
+
   return { success: true, token, tipoUsuario: user.tipoUsuario };
 }
 
