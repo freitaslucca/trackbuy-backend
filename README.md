@@ -73,5 +73,34 @@ Authorization: Bearer SEU_TOKEN_AQUI
 ```
 
 ---
+## Novas Funcionalidades Implementadas
+
+### 1. Exportação de Solicitações
+Agora é possível exportar as solicitações através de um arquivo CSV com filtros para **data** e **setor**. O formato para filtrar por data e setor é simples:
+
+- **Filtro por período (data):**
+    ```http
+    GET /solicitacoes/exportar?startDate=2025-04-01&endDate=2025-04-30
+    ```
+
+- **Filtro por setor:**
+    ```http
+    GET /solicitacoes/exportar?setor=Marketing
+    ```
+
+### 2. Notificação para o Solicitante
+Quando o status de uma solicitação é alterado (como "aprovado" ou "negado"), uma **notificação** é enviada automaticamente para o solicitante. A notificação informa o status da solicitação, como "Aprovada" ou "Rejeitada", com base na alteração.
+
+### 3. Fuso Horário e Formatação de Data
+As datas agora são retornadas e manipuladas com o formato **brasileiro** (`dd/MM/yyyy`), e o horário está ajustado para o **fuso horário do Brasil**.
+
+---
+
+**Como Usar:**
+
+1. Para exportar as solicitações por **data** e **setor**, utilize os parâmetros `startDate`, `endDate`, e `setor` conforme exemplificado.
+2. As notificações são enviadas automaticamente sempre que uma solicitação for atualizada com o novo status.
+
+Essas atualizações tornam a exportação de dados mais flexível e mantêm os usuários informados sobre o status das suas solicitações.
 
 **TrackBuy - Backend** desenvolvido por **Lucca Rodrigues**.
