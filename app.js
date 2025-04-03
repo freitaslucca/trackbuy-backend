@@ -18,5 +18,8 @@ const start = async () => {
     process.exit(1);
   }
 };
+fastify.get('/', async (request, reply) => {
+  return { message: '🚀 API do TrackBuy está online!' }
+})
 
 start();
