@@ -50,7 +50,7 @@ async function criarSolicitacaoHandler(request, reply) {
 async function atualizarStatusHandler(request, reply) {
   const db = request.server.mongo;
   const { id } = request.params;
-  const { status, comentarioNegado } = request.body;
+  const { status, comentarioNegado, valorCompra } = request.body;
   const user = request.user;
 
   // Verifica se é compradora
@@ -64,10 +64,24 @@ async function atualizarStatusHandler(request, reply) {
     return reply.code(400).send({ success: false, message: 'Status inválido.' });
   }
 
-  // Atualiza o status da solicitação
+  // Monta o que será atualizado
+  const camposParaAtualizar = { status };
+
+  if (status === 'negado' && comentarioNegado) {
+    camposParaAtualizar.comentarioNegado = comentarioNegado;
+  }
+
+  if (status === 'aprovado' && valorCompra !== undefined) {
+    const valorNumerico = parseFloat(valorCompra);
+    if (isNaN(valorNumerico) || valorNumerico <= 0) {
+      return reply.code(400).send({ success: false, message: 'Valor de compra inválido.' });
+    }
+    camposParaAtualizar.valorCompra = valorNumerico;
+  }
+
   const result = await db.collection('solicitacoes').updateOne(
     { _id: new ObjectId(id) },
-    { $set: { status, comentarioNegado } }
+    { $set: camposParaAtualizar }
   );
 
   if (result.modifiedCount === 0) {
