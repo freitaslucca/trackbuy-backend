@@ -129,12 +129,40 @@ async function painelCompradoraHandler(request, reply) {
   const aprovado = await db.collection('solicitacoes').countDocuments({ status: 'aprovado' });
   const negado = await db.collection('solicitacoes').countDocuments({ status: 'negado' });
 
+  // 📅 Data atual
+  const agora = new Date();
+  const inicioMes = new Date(agora.getFullYear(), agora.getMonth(), 1);
+  const fimMes = new Date(agora.getFullYear(), agora.getMonth() + 1, 0, 23, 59, 59, 999);
+
+  // Soma dos valores das compras aprovadas no mês atual
+  const comprasMes = await db.collection('solicitacoes').aggregate([
+    {
+      $match: {
+        status: 'aprovado',
+        valorCompra: { $type: "number" },
+        dataSolicitacao: {
+          $gte: inicioMes,
+          $lte: fimMes
+        }
+      }
+    },
+    {
+      $group: {
+        _id: null,
+        total: { $sum: "$valorCompra" }
+      }
+    }
+  ]).toArray();
+
+  const totalComprasMes = comprasMes.length > 0 ? comprasMes[0].total : 0;
+
   return reply.send({
     success: true,
     painel: {
       pendente,
       aprovado,
-      negado
+      negado,
+      totalComprasMes: totalComprasMes.toFixed(2) // pode retornar como string formatada
     }
   });
 }
