@@ -2,8 +2,10 @@ require('dotenv').config();
 const fastify = require('fastify')({ logger: true });
 const dbPlugin = require('./plugins/db');
 
-fastify.register(require('@fastify/cors'));
-fastify.register(dbPlugin);
+fastify.register(require('@fastify/cors'), {
+  origin: '*', // ou 'http://localhost:5500' se quiser restringir
+  methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS']
+});fastify.register(dbPlugin);
 fastify.register(require('./routes/auth.routes'));
 fastify.register(require('./routes/test.routes'));
 fastify.register(require('./routes/solicitacoes.routes'));
