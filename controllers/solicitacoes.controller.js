@@ -91,7 +91,7 @@ async function atualizarStatusHandler(request, reply) {
 
   const notificacao = {
     solicitanteId: solicitanteId,
-    mensagem: `Sua solicitação foi ${status === 'negado' ? 'rejeitada' : 'aprovada'}.`,
+    mensagem: `Sua solicitação de <strong>${solicitacao.nomeProduto}</strong> foi ${status === 'negado' ? 'rejeitada' : 'aprovada'}.`,
     status: status,
     dataNotificacao: new Date(),
   };
