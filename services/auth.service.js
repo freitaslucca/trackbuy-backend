@@ -13,7 +13,7 @@ async function login(email, senha, db) {
   const token = jwt.generateToken({
     id: user._id,
     tipoUsuario: user.tipoUsuario,
-    nome: user.nome  // Incluindo o nome do usuário no token
+    nome: user.nome 
   });
 
   return { success: true, token, tipoUsuario: user.tipoUsuario };
